@@ -1,0 +1,107 @@
+# AI Crypto Trading Application Configuration
+
+# Exchange Configuration
+exchange:
+  name: "kraken"
+  api_url: "https://api.kraken.com"
+  websocket_url: "wss://ws.kraken.com"
+  sandbox: true  # Set to false for production
+  rate_limit: 1  # requests per second
+
+# Trading Configuration
+trading:
+  enabled: false  # Safety: disabled by default
+  mode: "paper"   # paper, live
+  base_currency: "USD"
+  trading_pairs:
+    - "BTC/USD"
+    - "ETH/USD"
+    - "ADA/USD"
+  
+  # Risk Management
+  risk:
+    max_position_size: 0.1  # 10% of portfolio
+    max_daily_loss: 0.05    # 5% daily loss limit
+    stop_loss: 0.02         # 2% stop loss
+    take_profit: 0.04       # 4% take profit
+    max_open_positions: 3
+    
+  # Order Configuration
+  orders:
+    default_order_type: "limit"
+    slippage_tolerance: 0.001  # 0.1%
+    timeout_seconds: 300
+
+# Data Sources
+data_sources:
+  price_data:
+    - kraken
+    - coinbase_pro
+  
+  news_sentiment:
+    enabled: false  # Requires additional API keys
+    sources: []
+  
+  social_sentiment:
+    enabled: false  # Requires additional API keys
+    sources: []
+
+# Machine Learning Models
+ml_models:
+  lstm:
+    enabled: true
+    sequence_length: 60
+    hidden_units: 50
+    dropout_rate: 0.2
+    epochs: 100
+    batch_size: 32
+  
+  ensemble:
+    enabled: true
+    models:
+      - "random_forest"
+      - "xgboost"
+      - "linear_regression"
+  
+  retraining:
+    frequency_hours: 24
+    min_data_points: 1000
+
+# Database Configuration
+database:
+  url: "sqlite:///crypto_trading.db"
+  echo: false
+  pool_size: 5
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/crypto_trading.log"
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
+
+# Monitoring and Alerts
+monitoring:
+  enabled: true
+  prometheus_port: 8000
+  health_check_interval: 60
+  
+  alerts:
+    email_enabled: false
+    slack_enabled: false
+    telegram_enabled: false
+
+# Security Settings
+security:
+  encryption_key_file: "keys/encryption.key"
+  api_key_encryption: true
+  session_timeout: 3600
+  max_failed_attempts: 3
+
+# Compliance
+compliance:
+  max_trade_frequency: 100  # per day
+  transaction_logging: true
+  audit_trail: true
+  position_reporting: true
